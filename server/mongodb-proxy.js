@@ -34,8 +34,16 @@ app.all('/', function(req, res, next)
   })
 });
 
+app.options('/search', skipOptionsCalls)
+
+function skipOptionsCalls(req, res, next) {
+  logRequest(req.body, "OPTIONS ");
+  setCORSHeaders(res);
+  next();
+}
+
 // Called by template functions and to look up variables
-app.all('/search', function(req, res, next)
+app.post('/search', function(req, res, next)
 {
   logRequest(req.body, "/search")
   setCORSHeaders(res);
@@ -121,8 +129,10 @@ function queryFinished(requestId, queryId, results, res, next)
   }
 }
 
+app.options('/query', skipOptionsCalls)
+
 // Called to get graph points
-app.all('/query', function(req, res, next)
+app.post('/query', function(req, res, next)
 {
     logRequest(req.body, "/query")
     setCORSHeaders(res);
@@ -179,7 +189,7 @@ console.log("Server is listening on port " + serverConfig.port);
 function setCORSHeaders(res) 
 {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "accept, content-type");  
 }
 
