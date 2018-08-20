@@ -10,8 +10,10 @@ var moment = require('moment')
 
 app.use(bodyParser.json());
 
+app.options('/', skipOptionsCalls)
+
 // Called by test
-app.all('/', function(req, res, next) 
+app.get('/', function(req, res, next) 
 {
   logRequest(req.body, "/")
   setCORSHeaders(res);
