@@ -10,10 +10,15 @@ var moment = require('moment')
 
 app.use(bodyParser.json());
 
-app.options('/', skipOptionsCalls)
+app.options('/', function(req, res, next)
+{
+  logRequest(req.body, "/search")
+  setCORSHeaders(res);
+  next()
+})
 
 // Called by test
-app.get('/', function(req, res, next) 
+app.post('/', function(req, res, next) 
 {
   logRequest(req.body, "/")
   setCORSHeaders(res);
@@ -36,7 +41,12 @@ app.get('/', function(req, res, next)
   })
 });
 
-app.options('/search', skipOptionsCalls)
+app.options('/search', function(req, res, next)
+{
+  logRequest(req.body, "/search")
+  setCORSHeaders(res);
+  next()
+})
 
 function skipOptionsCalls(req, res, next) {
   logRequest(req.body, "OPTIONS ");
@@ -131,7 +141,12 @@ function queryFinished(requestId, queryId, results, res, next)
   }
 }
 
-app.options('/query', skipOptionsCalls)
+app.options('/query', function(req, res, next)
+{
+  logRequest(req.body, "/search")
+  setCORSHeaders(res);
+  next()
+})
 
 // Called to get graph points
 app.post('/query', function(req, res, next)
