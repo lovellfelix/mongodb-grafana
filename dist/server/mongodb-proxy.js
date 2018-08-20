@@ -10,8 +10,15 @@ var moment = require('moment')
 
 app.use(bodyParser.json());
 
+app.options('/', function(req, res, next)
+{
+  logRequest(req.body, "/search")
+  setCORSHeaders(res);
+  next()
+})
+
 // Called by test
-app.all('/', function(req, res, next) 
+app.post('/', function(req, res, next) 
 {
   logRequest(req.body, "/")
   setCORSHeaders(res);
@@ -34,8 +41,15 @@ app.all('/', function(req, res, next)
   })
 });
 
+app.options('/search', function(req, res, next)
+{
+  logRequest(req.body, "/search")
+  setCORSHeaders(res);
+  next()
+})
+
 // Called by template functions and to look up variables
-app.all('/search', function(req, res, next)
+app.post('/search', function(req, res, next)
 {
   logRequest(req.body, "/search")
   setCORSHeaders(res);
@@ -121,8 +135,15 @@ function queryFinished(requestId, queryId, results, res, next)
   }
 }
 
+app.options('/query', function(req, res, next)
+{
+  logRequest(req.body, "/query")
+  setCORSHeaders(res);
+  next()
+})
+
 // Called to get graph points
-app.all('/query', function(req, res, next)
+app.post('/query', function(req, res, next)
 {
     logRequest(req.body, "/query")
     setCORSHeaders(res);
@@ -179,7 +200,7 @@ console.log("Server is listening on port " + serverConfig.port);
 function setCORSHeaders(res) 
 {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "accept, content-type");  
 }
 

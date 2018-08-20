@@ -48,12 +48,6 @@ app.options('/search', function(req, res, next)
   next()
 })
 
-function skipOptionsCalls(req, res, next) {
-  logRequest(req.body, "OPTIONS ");
-  setCORSHeaders(res);
-  next();
-}
-
 // Called by template functions and to look up variables
 app.post('/search', function(req, res, next)
 {
@@ -143,7 +137,7 @@ function queryFinished(requestId, queryId, results, res, next)
 
 app.options('/query', function(req, res, next)
 {
-  logRequest(req.body, "/search")
+  logRequest(req.body, "/query")
   setCORSHeaders(res);
   next()
 })
