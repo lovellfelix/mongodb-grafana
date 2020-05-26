@@ -1,9 +1,12 @@
-FROM node:carbon
+FROM node:lts-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
+COPY dist/server /app
+COPY package.json /app
 
-COPY . .
-RUN npm install
+RUN npm install --production
 
+VOLUME /app/config
 EXPOSE 3333
-CMD ["npm", "run", "server"]
+
+CMD node mongodb-proxy.js
