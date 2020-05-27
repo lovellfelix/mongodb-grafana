@@ -1,4 +1,5 @@
 *
 !dist
 !server
+!Gruntfile.js
 !package*.json

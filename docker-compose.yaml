@@ -11,4 +11,4 @@ services:
       - "./examples:/var/lib/grafana/dashboards"
   gf-mdb-proxy:
     build: .
-    image: jamesosgood/mongodb-grafana
+    image: lovellfelix/mongodb-grafana-plugin
